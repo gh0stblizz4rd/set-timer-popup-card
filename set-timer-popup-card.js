@@ -551,7 +551,12 @@ class SetTimerCard extends LitElement {
       this._hass.callService("switch_timer", "set_timer", {
         entity_id: this.entity,
         action: this.timerAction,
-        duration: `${this.hoursColumnMoveIndex}:${this.minutesColumnMoveIndex}:${this.secondsColumnMoveIndex}`,
+        duration: `${String(this.hoursColumnMoveIndex).padStart(
+          2,
+          "0"
+        )}:${String(this.minutesColumnMoveIndex).padStart(2, "0")}:${String(
+          this.secondsColumnMoveIndex
+        ).padStart(2, "0")}`,
       });
 
       setTimeout(() => {
@@ -580,9 +585,7 @@ class SetTimerCard extends LitElement {
       }, 200);
     }
   }
-
   setConfig(config) {
-
     if (!config.entity) {
       throw new Error("No timer entity supplied");
     } else if (!config.entity.startsWith("switch_timer.")) {
